@@ -1,0 +1,120 @@
+Index: toolchain/uClibc/uclibc.mk
+===================================================================
+--- toolchain/uClibc/uclibc.mk	(revision 1161)
++++ toolchain/uClibc/uclibc.mk	(working copy)
+@@ -22,7 +22,7 @@
+ UCLIBC_VER:=0.9.28
+ UCLIBC_DIR:=$(TOOL_BUILD_DIR)/uClibc-$(UCLIBC_VER)
+ UCLIBC_SOURCE:=uClibc-$(UCLIBC_VER).tar.bz2
+-UCLIBC_SITE:=http://www.uclibc.org/downloads
++UCLIBC_SITE:=http://www.uclibc.org/downloads/old-releases
+ endif
+ 
+ UCLIBC_TARGET_ARCH:=$(shell echo $(ARCH) | sed -e s'/-.*//' \
+Index: toolchain/binutils/binutils.mk
+===================================================================
+--- toolchain/binutils/binutils.mk	(revision 1161)
++++ toolchain/binutils/binutils.mk	(working copy)
+@@ -25,7 +25,7 @@
+ BINUTILS_SITE:=ftp://sources.redhat.com/pub/binutils/snapshots/
+ endif
+ 
+-BINUTILS_SOURCE:=binutils-$(BINUTILS_VERSION).tar.bz2
++BINUTILS_SOURCE:=binutils-$(BINUTILS_VERSION).50.0.18.tar.bz2
+ BINUTILS_DIR:=$(TOOL_BUILD_DIR)/binutils-$(BINUTILS_VERSION)
+ BINUTILS_CAT:=bzcat
+ 
+Index: toolchain/gcc/gcc-uclibc-3.x.mk
+===================================================================
+--- toolchain/gcc/gcc-uclibc-3.x.mk	(revision 1161)
++++ toolchain/gcc/gcc-uclibc-3.x.mk	(working copy)
+@@ -20,7 +20,7 @@
+ GCC_VERSION:=$(strip $(GCC_VERSION))
+ 
+ #GCC_SITE:=ftp://ftp.gnu.org/gnu/gcc/gcc-$(GCC_VERSION)
+-GCC_SITE:=ftp://ftp.ibiblio.org/pub/mirrors/gnu/ftp/gnu/gcc/gcc-$(GCC_VERSION)
++GCC_SITE:=http://ftp.ibiblio.org/pub/mirrors/gnu/ftp/gnu/gcc/gcc-$(GCC_VERSION)
+ 
+ #
+ # snapshots....
+Index: package/fakeroot/fakeroot.mk
+===================================================================
+--- package/fakeroot/fakeroot.mk	(revision 1161)
++++ package/fakeroot/fakeroot.mk	(working copy)
+@@ -5,7 +5,7 @@
+ #############################################################
+ FAKEROOT_VERSION:=1.2.13
+ FAKEROOT_SOURCE:=fakeroot_$(FAKEROOT_VERSION).tar.gz
+-FAKEROOT_SITE:=http://ftp.debian.org/debian/pool/main/f/fakeroot
++FAKEROOT_SITE:=http://www.daimi.au.dk/~spider/gumstix/gumstix-buildroot/dl
+ FAKEROOT_CAT:=zcat
+ FAKEROOT_DIR1:=$(TOOL_BUILD_DIR)/fakeroot-$(FAKEROOT_VERSION)
+ FAKEROOT_DIR2:=$(BUILD_DIR)/fakeroot-$(FAKEROOT_VERSION)
+Index: package/module-init-tools/module-init-tools.mk
+===================================================================
+--- package/module-init-tools/module-init-tools.mk	(revision 1161)
++++ package/module-init-tools/module-init-tools.mk	(working copy)
+@@ -4,7 +4,7 @@
+ #
+ #############################################################
+ MODULE_INIT_TOOLS_SOURCE=module-init-tools-3.2.2.tar.bz2
+-MODULE_INIT_TOOLS_SITE=ftp://ftp.kernel.org/pub/linux/utils/kernel/module-init-tools
++MODULE_INIT_TOOLS_SITE=http://ftp.kernel.org/pub/linux/utils/kernel/module-init-tools
+ MODULE_INIT_TOOLS_DIR=$(BUILD_DIR)/module-init-tools-3.2.2
+ MODULE_INIT_TOOLS_BINARY=modprobe
+ MODULE_INIT_TOOLS_TARGET_BINARY=$(TARGET_DIR)/sbin/$(MODULE_INIT_TOOLS_BINARY)
+Index: package/udev/udev.mk
+===================================================================
+--- package/udev/udev.mk	(revision 1161)
++++ package/udev/udev.mk	(working copy)
+@@ -5,7 +5,7 @@
+ #############################################################
+ UDEV_VERSION:=101
+ UDEV_SOURCE:=udev-$(UDEV_VERSION).tar.bz2
+-UDEV_SITE:=ftp://ftp.kernel.org/pub/linux/utils/kernel/hotplug/
++UDEV_SITE:=http://ftp.kernel.org/pub/linux/utils/kernel/hotplug/
+ UDEV_CAT:=bzcat
+ UDEV_DIR:=$(BUILD_DIR)/udev-$(UDEV_VERSION)
+ UDEV_TARGET_BINARY:=sbin/udev
+Index: package/pxaregs/pxaregs.mk
+===================================================================
+--- package/pxaregs/pxaregs.mk	(revision 1161)
++++ package/pxaregs/pxaregs.mk	(working copy)
+@@ -4,7 +4,7 @@
+ #
+ #############################################################
+ PXAREGS_SOURCE:=pxaregs-1.14.tar.bz
+-PXAREGS_SITE:=http://files.gumstix.com
++PXAREGS_SITE:=http://www.daimi.au.dk/~spider/gumstix/gumstix-buildroot/dl
+ PXAREGS_DIR:=$(BUILD_DIR)/pxaregs-1.14
+ PXAREGS_CAT:=bzcat
+ PXAREGS_BINARY:=pxaregs
+Index: package/wifistix/wifistix.mk
+===================================================================
+--- package/wifistix/wifistix.mk	(revision 1161)
++++ package/wifistix/wifistix.mk	(working copy)
+@@ -3,9 +3,9 @@
+ # Driver for wifistix module
+ #
+ #############################################################
+-CF8385_SITE:=http://files.gumstix.com
++CF8385_SITE:=http://www.daimi.au.dk/~spider/gumstix/gumstix-buildroot/dl
+ CF8385_TARGET_MODULE=$(TARGET_DIR)/lib/modules/.cf8385
+-MARVELL_BINARY_DRIVERS=marvell-binaries-2.6.18-2.tar
++MARVELL_BINARY_DRIVERS=marvell-binaries-2.6.20-1.tar
+ 
+ $(DL_DIR)/$(MARVELL_BINARY_DRIVERS):
+ 	 $(WGET) -P $(DL_DIR) $(CF8385_SITE)/$(MARVELL_BINARY_DRIVERS)
+Index: package/bonjour/bonjour.mk
+===================================================================
+--- package/bonjour/bonjour.mk	(revision 1161)
++++ package/bonjour/bonjour.mk	(working copy)
+@@ -19,7 +19,7 @@
+ # USA
+ 
+ BONJOUR_SOURCE:=mDNSResponder-107.5.tar.gz
+-BONJOUR_SITE:=http://files.gumstix.com
++BONJOUR_SITE:=http://www.daimi.au.dk/~spider/gumstix/gumstix-buildroot/dl
+ BONJOUR_DIR:=$(BUILD_DIR)/mDNSResponder-107.5
+ 
+ $(DL_DIR)/$(BONJOUR_SOURCE):
