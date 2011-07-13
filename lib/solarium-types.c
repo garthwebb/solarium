@@ -1,5 +1,7 @@
 #include "solarium-types.h"
 
+uint8_t BAD_ADDRESSES[] = { 112 };
+
 // Each PCA9635
 device_t device[NUM_DEVICES];
 
@@ -12,9 +14,11 @@ ray_t  ray[NUM_RAYS+1];
 // Each ring
 ring_t ring[NUM_RINGS];
 
+int valid_device_addr (uint8_t addr);
+
 void setup (void) {
 	int x, y;
-	
+	uint8_t device_addr = FIRST_DEVICE_ADDRESS;
 	// Zero out the rays and assign devices
 	for (x = 0; x < NUM_RAYS; x++) {
 		ray[x].id = x + 1;
@@ -27,6 +31,15 @@ void setup (void) {
 			
 			// Save a pointer to this device's ray's dirty bit
 			device[(3*x) + y].dirty = &(ray[x].dirty);
+
+			// Skip over any reserved addresses
+			while (!valid_device_addr(device_addr)) {
+				device_addr++;
+			}
+			// Set the address for the device
+			device[(3*x) + y].addr = device_addr;
+
+                        device_addr++;
 		}
 
 		// Assign beams sequentially
@@ -38,7 +51,7 @@ void setup (void) {
 	
 	// Zero out devices and attach beams
 	for (x = 0; x < NUM_DEVICES; x++) {
-		device[x].dirty = 0;
+		*(device[x].dirty) = 0;
 
 		// Initialize each of the 16 LEDs the device controls
 		for (y = 0; y < 16; y++) {
@@ -207,4 +220,22 @@ void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t l
 
 void assign_ray (ring_t *ring, uint8_t ray_num) {
 	assign_partial_ray(ring, ray_num, 1, 16);
+}
+
+int valid_device_addr (uint8_t addr) {
+	int i;
+	for (i = 0; i < sizeof(BAD_ADDRESSES); i++) {
+		if (addr == BAD_ADDRESSES[i]) {
+			return 0;
+		}
+	}
+	return 1;
+}
+
+device_t *get_device(int index) {
+	if (index >= NUM_DEVICES) {
+		return (device_t *)NULL;
+	}
+
+	return &device[index];
 }

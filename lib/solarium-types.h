@@ -4,6 +4,9 @@
  
  */
 
+#ifndef __SOLARIUM_TYPES_H__
+#define __SOLARIUM_TYPES_H__
+
 #include <stdint.h>
 #include <stdio.h>
 
@@ -44,12 +47,21 @@ typedef struct {
 // SW Reset: 0000 011
 // Fm+     : 0000 100, 0000 101, 0000 110, 0000 111
 
-#define NUM_DEVICES	108
-#define NUM_BEAMS	576
 #define NUM_RAYS	36
+#define NUM_DEVICES	(NUM_RAYS * 3)
+#define NUM_BEAMS	(NUM_RAYS * 16)
 #define NUM_RINGS	17
+
+#define FIRST_DEVICE_ADDRESS 18
+
+extern uint8_t BAD_ADDRESSES[];
+
+#define LAST_DEVICE_ADDRESS  (FIRST_DEVICE_ADDRESS + NUM_DEVICES + sizeof(BAD_ADDRESSES) - 1)
 
 void setup (void);
 void set_ring_size (ring_t *ring, uint8_t num_beams);
 void assign_ray (ring_t *ring, uint8_t ray_num);
 void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t last);
+device_t *get_device (int index);
+
+#endif

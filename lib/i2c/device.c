@@ -6,7 +6,7 @@
 
 #define NUM_DEVICES 3;
 
-device_t devices[3];
+//device_t devices[3];
 
 const char *i2cDevName = "/dev/i2c-0";
 int i2cDev;
@@ -48,5 +48,14 @@ void write_register (uint8_t addr, uint8_t reg, uint8_t val) {
 
   rc = I2cTransfer( i2cDev, reg, &val, 1, NULL, 0, NULL );
   //printf("\n");
+}
+
+// Expects an array of brightness values
+void fast_write_brightness (uint8_t addr, uint8_t vals[], size_t num_vals) {
+  int rc;
+
+  I2cSetSlaveAddress(i2cDev, addr, I2C_NO_CRC);
+
+  rc = I2cTransfer( i2cDev, ALL_PWM_VALS, vals, num_vals, NULL, 0, NULL );
 }
 

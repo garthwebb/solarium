@@ -76,13 +76,16 @@ int main( int argc, char **argv ) {
 		// For the rest ooze the color to the other pixels
 		ooze(red, green, blue);
 
-		for (i=REG_PWM0; i<=REG_PWM15; i++) {
+                fast_write_brightness (ADDR_RED, red, 16);
+                fast_write_brightness (ADDR_GREEN, green, 16);
+                fast_write_brightness (ADDR_BLUE, blue, 16);
+//		for (i=REG_PWM0; i<=REG_PWM15; i++) {
 	//		if ((i < REG_PWM11) || (i == REG_PWM12) || (i == REG_PWM13) || (i == REG_PWM14) || (i == REG_PWM15)) {
-			write_register(ADDR_RED, i, red[i-REG_PWM0]);
-			write_register(ADDR_GREEN, i, green[i-REG_PWM0]);
-			write_register(ADDR_BLUE, i, blue[i-REG_PWM0]);
+//			write_register(ADDR_RED, i, red[i-REG_PWM0]);
+//			write_register(ADDR_GREEN, i, green[i-REG_PWM0]);
+//			write_register(ADDR_BLUE, i, blue[i-REG_PWM0]);
 	//		}
-		}
+//		}
 	}
 
 	cleanup();

@@ -6,6 +6,7 @@
  */
 
 #include <stdint.h>
+#include <stddef.h>
 
 /* Registers */
 #define REG_MODE1   0x00 /* Mode registers: Set behavior of PCA9635 */
@@ -37,6 +38,7 @@
 #define REG_SUBADR3 0x1A
 #define REG_ALLCALLADR 0x1B /* All call I2C address */
 
+
 /* Register MODE1 bits.  OR these together */
 #define MODE1_AI2     0x80 // 0b10000000
 #define MODE1_AI1     0x40 // 0b01000000
@@ -46,6 +48,8 @@
 #define MODE1_SUB2    0x04 // 0b00000100
 #define MODE1_SUB3    0x02 // 0b00000010
 #define MODE1_ALLCALL 0x01 // 0b00000001
+
+#define ALL_PWM_VALS (MODE1_AI2 | MODE1_AI0 | REG_PWM0)
 
 /* Register MODE2 bits.  OR these together */
 #define MODE2_DMBLNK 0x20 // 0b00100000
@@ -79,7 +83,7 @@
 /* Software reset */
 #define ADR_SWRESET 0x03
 
-/* High speed mode
+/* High speed mode */
 
 /*
    Sub addresses are programmable via the REG_SUBADRX register.  These are the
@@ -89,37 +93,9 @@
 #define ADR_SUBADR2 0x72
 #define ADR_SUBADR3 0x74
 
-/* Data Types */
-
-/* A device stores values for the device, its address and whether it needs to
-   be updated
-*/
-
-typedef struct device {
-  uint8_t addr;
-  uint8_t val[8];
-  uint8_t updated;
-} device_t;
-
-typedef struct beam {
-  uint8_t *red;
-  uint8_t *green;
-  uint8_t *blue;
-} beam_t;
-
-typedef struct ray {
-  beam_t   beams[16];
-  device_t *devices[3];
-} ray_t;
-
-/* A ring stores pointers to individual beams */
-typedef beam_t *ring_t;
-
-/* A ringset stores points to each ring in the Solarium */
-typedef ring_t *ringset_t;
-
 /* Function Prototypes */
 
 void init_devices (void);
 void cleanup (void);
 void write_register (uint8_t addr, uint8_t reg, uint8_t val);
+void fast_write_brightness (uint8_t addr, uint8_t vals[], size_t num_vals);

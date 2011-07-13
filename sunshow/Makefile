@@ -13,8 +13,10 @@ endif
 TARGET	= sunshow
 
 PWD     := $(shell pwd)
+SOLARIUM_ROOT = $(PWD)/..
+SOLARIUM_LIB  = $(SOLARIUM_ROOT)/lib
 
-GUMSTIX_BUILDROOT   = /home/garth/gumstix/gumstix-buildroot
+GUMSTIX_BUILDROOT   = $(SOLARIUM_ROOT)/../gumstix/gumstix-buildroot
 BUILD_ARM           = $(wildcard $(GUMSTIX_BUILDROOT)/build_arm*)
 CROSS_COMPILE       = $(patsubst %gcc, %, $(wildcard $(BUILD_ARM)/staging_dir/bin/arm-linux-uclibc*-gcc))
 
@@ -30,7 +32,7 @@ CC = $(CROSS_COMPILE)gcc
 # and add them to the CPPFLAGS variable
 #
 
-CPPFLAGS += -I /home/garth/solarium/lib
+CPPFLAGS += -I $(SOLARIUM_LIB)
 
 #
 # If you need addional search paths for library files, then use the -L flag
@@ -54,7 +56,7 @@ all:	depend $(TARGET)
 # add additional .o files to the end of the line
 #
 
-SRCS	= $(TARGET).c /home/garth/solarium/i2c/device.c /home/garth/solarium/i2c/i2c-api.c /home/garth/solarium/i2c/DumpMem.c /home/garth/solarium/i2c/Log.c /home/garth/solarium/lib/solarium-types.c
+SRCS	= $(TARGET).c $(SOLARIUM_LIB)/i2c/device.c $(SOLARIUM_LIB)/i2c/i2c-api.c $(SOLARIUM_LIB)/i2c/DumpMem.c $(SOLARIUM_LIB)/i2c/Log.c $(SOLARIUM_LIB)/solarium-types.c
 OBJS	= $(SRCS:.c=.o)
 		     
 $(TARGET) : $(OBJS)
