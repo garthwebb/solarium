@@ -1,4 +1,5 @@
 #include "solarium-types.h"
+#include "i2c/device.h"
 
 uint8_t BAD_ADDRESSES[] = { 112 };
 
@@ -9,7 +10,7 @@ device_t device[NUM_DEVICES];
 beam_t beam[NUM_BEAMS];
 
 // All the rays in the Solarium.
-ray_t  ray[NUM_RAYS+1];
+ray_t  ray[NUM_RAYS];
 
 // Each ring
 ring_t ring[NUM_RINGS];
@@ -20,12 +21,12 @@ void setup (void) {
 	int x, y;
 	uint8_t device_addr = FIRST_DEVICE_ADDRESS;
 	// Zero out the rays and assign devices
-	for (x = 0; x < NUM_RAYS; x++) {
+	for (x = 0; x < NUM_RAYS; ++x) {
 		ray[x].id = x + 1;
-		ray[x].dirty = 0;
+		ray[x].dirty = 1;
 
 		// Assign the three devices and set pointers
-		for (y = 0; y < 3; y++) {
+		for (y = 0; y < 3; ++y) {
 			// Save a pointer to the next available device
 			ray[x].devices[y] = &device[(3*x)+y];
 			
@@ -43,18 +44,17 @@ void setup (void) {
 		}
 
 		// Assign beams sequentially
-		for (y = 0; y < 16; y++) {
+		for (y = 0; y < 16; ++y) {
 			ray[x].beams[y] = &beam[(16*x) + y];
 			beam[(16*x) + y].dirty = &(ray[x].dirty);
 		}
 	}
 	
 	// Zero out devices and attach beams
-	for (x = 0; x < NUM_DEVICES; x++) {
-		*(device[x].dirty) = 0;
+	for (x = 0; x < NUM_DEVICES; ++x) {
 
 		// Initialize each of the 16 LEDs the device controls
-		for (y = 0; y < 16; y++) {
+		for (y = 0; y < 16; ++y) {
 			// Zero out the value
 			device[x].value[y] = 0;
 			
@@ -171,6 +171,9 @@ void setup (void) {
 	/** Ring 0 - 1 beam **/
 	set_ring_size(&ring[0], 1);
 	assign_partial_ray(&ring[0], 36, 1, 1);
+
+        // Draw the 0's out to the devices, just to make sure
+	draw();
 }
 
 void set_ring_size (ring_t *ring, uint8_t num_beams) {
@@ -196,7 +199,7 @@ void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t l
 		if (ring->beams[x] == NULL) {
 			start = x;
 		} else {
-			x++;
+			++x;
 		}
 	}
 
@@ -213,7 +216,7 @@ void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t l
 	}
 
 	// Start assigning beams
-	for (x = start; x < end; x++) {
+	for (x = start; x < end; ++x) {
 		ring->beams[x] = ray[ray_num-1].beams[x+first-1];
 	}
 }
@@ -224,7 +227,7 @@ void assign_ray (ring_t *ring, uint8_t ray_num) {
 
 int valid_device_addr (uint8_t addr) {
 	int i;
-	for (i = 0; i < sizeof(BAD_ADDRESSES); i++) {
+	for (i = 0; i < sizeof(BAD_ADDRESSES); ++i) {
 		if (addr == BAD_ADDRESSES[i]) {
 			return 0;
 		}
@@ -233,9 +236,22 @@ int valid_device_addr (uint8_t addr) {
 }
 
 device_t *get_device(int index) {
-	if (index >= NUM_DEVICES) {
+	// This could probably just be an assert
+	if (index >= NUM_DEVICES || index < 0) {
 		return (device_t *)NULL;
 	}
 
 	return &device[index];
+}
+
+ray_t *get_ray(int index) {
+        // The index argument is 1 indexed, but the array is 0 indexed
+        --index;
+
+	// This could probably just be an assert
+	if (index > NUM_RAYS || index < 0) {
+		return (ray_t *)NULL;
+	}
+
+	return &ray[index];
 }

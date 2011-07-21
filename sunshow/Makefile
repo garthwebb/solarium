@@ -56,7 +56,7 @@ all:	depend $(TARGET)
 # add additional .o files to the end of the line
 #
 
-SRCS	= $(TARGET).c $(SOLARIUM_LIB)/i2c/device.c $(SOLARIUM_LIB)/i2c/i2c-api.c $(SOLARIUM_LIB)/i2c/DumpMem.c $(SOLARIUM_LIB)/i2c/Log.c $(SOLARIUM_LIB)/solarium-types.c
+SRCS	= $(TARGET).c $(SOLARIUM_LIB)/i2c/device.c $(SOLARIUM_LIB)/i2c/i2c-api.c $(SOLARIUM_LIB)/i2c/DumpMem.c $(SOLARIUM_LIB)/i2c/Log.c $(SOLARIUM_LIB)/solarium-types.c $(SOLARIUM_LIB)/solarium-draw.c
 OBJS	= $(SRCS:.c=.o)
 		     
 $(TARGET) : $(OBJS)

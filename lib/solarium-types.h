@@ -53,6 +53,8 @@ typedef struct {
 #define NUM_RINGS	17
 
 #define FIRST_DEVICE_ADDRESS 18
+#define FIRST_RAY_INDEX      1
+#define LAST_RAY_INDEX       NUM_RAYS
 
 extern uint8_t BAD_ADDRESSES[];
 
@@ -63,5 +65,6 @@ void set_ring_size (ring_t *ring, uint8_t num_beams);
 void assign_ray (ring_t *ring, uint8_t ray_num);
 void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t last);
 device_t *get_device (int index);
+ray_t *get_ray (int index);
 
 #endif
