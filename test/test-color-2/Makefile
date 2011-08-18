@@ -25,7 +25,7 @@ $(error Unable to detect Cross Compiler)
 endif
 
 TARGET_ARCH=-Os -march=armv5te -mtune=xscale -Wa,-mcpu=xscale
-CC = $(CROSS_COMPILE)gcc
+CC = $(CROSS_COMPILE)gcc -static
 
 #
 # If you need additional serch paths for include files, then use the -I flag
