@@ -3,7 +3,7 @@
 #include "solarium-types.h"
 #include "solarium-draw.h"
 
-uint8_t color_offsets[][] = {
+uint8_t color_offsets[6][3] = {
 	{ 0, 8, 16 },
 	{ 0, 16, 8 },
 	{ 8, 0, 16 },

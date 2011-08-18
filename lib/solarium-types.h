@@ -33,6 +33,7 @@ typedef struct ray_struct {
 	uint8_t 	id;	         // This ray's ID  (for reference on the hemisphere chart)
 	device_t	*devices[3]; // Pointers to the three devices for this beam
 	beam_t  	*beams[16];  // Array of beam pointers this ray controls
+	uint8_t		size;	     // The number of beams in the ray
 	uint8_t 	dirty;       // Incremented everytime a beam is updated.
 } ray_t;
 
@@ -49,7 +50,7 @@ typedef struct {
 
 #define NUM_RAYS	36
 #define NUM_DEVICES	(NUM_RAYS * 3)
-#define NUM_BEAMS	(NUM_RAYS * 16)
+#define NUM_BEAMS	566
 #define NUM_RINGS	17
 
 #define FIRST_DEVICE_ADDRESS 18
@@ -61,9 +62,6 @@ extern uint8_t BAD_ADDRESSES[];
 #define LAST_DEVICE_ADDRESS  (FIRST_DEVICE_ADDRESS + NUM_DEVICES + sizeof(BAD_ADDRESSES) - 1)
 
 void setup (void);
-void set_ring_size (ring_t *ring, uint8_t num_beams);
-void assign_ray (ring_t *ring, uint8_t ray_num);
-void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t last);
 device_t *get_device (int index);
 ray_t *get_ray (int index);
 
