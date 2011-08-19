@@ -23,6 +23,7 @@ void draw (void) {
 }
 
 inline void draw_device (device_t *dev) {
+        fprintf(stderr, "Writing to address %d\n", dev->addr);
 	fast_write_brightness (dev->addr, dev->value, 16);
 }
 

@@ -278,6 +278,7 @@ void assign_ray (ring_t *ring, uint8_t ray_num) {
 
 int valid_device_addr (uint8_t addr) {
 	int i;
+        assert (addr < 126);
 	for (i = 0; i < sizeof(BAD_ADDRESSES); ++i) {
 		if (addr == BAD_ADDRESSES[i]) {
 			return 0;
