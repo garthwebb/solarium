@@ -201,7 +201,10 @@ void setup (void) {
 	set_ring_size(&ring[0], 1, &beam_index);
 	assign_partial_ray(&ring[0], 36, 1, 1);
 
-        // Draw the 0's out to the devices, just to make sure
+	// init the devices
+	init_devices();
+
+	// Draw the 0's out to the devices, just to make sure
 	draw();
 }
 

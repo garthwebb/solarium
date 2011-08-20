@@ -5,9 +5,9 @@
 #############################################################################
 
 ifeq ($(DEBUG),y)
-	CFLAGS += -O -g		# -O is need to expand inlines
+	CFLAGS += -O -g	-Wall	# -O is need to expand inlines
 else
-	CFLAGS += -O2
+	CFLAGS += -O2 -Wall
 endif
 
 TARGET	= step-beams
