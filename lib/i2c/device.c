@@ -3,6 +3,11 @@
 #include "i2c-api.h"
 #include <fcntl.h>
 #include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include "Log.h"
 
 #define NUM_DEVICES 3;
 

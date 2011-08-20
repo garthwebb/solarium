@@ -1,6 +1,7 @@
 #include <assert.h>
 #include <malloc.h>
 #include "solarium-types.h"
+#include "solarium-draw.h"
 #include "i2c/device.h"
 
 // This maps each degree of each ring to a particular beam on that ring. Beams are numbered by their

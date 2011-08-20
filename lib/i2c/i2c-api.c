@@ -117,7 +117,8 @@ int I2cTransfer
     struct i2c_msg              msg[ 2 ];
     uint8_t                     wrBuf[ I2C_MAX_DATA_LEN + 3 ];  // +1 for cmd, +1 for len, +1 for CRC
     uint8_t                     rdBuf[ I2C_MAX_DATA_LEN + 2 ];  // +1 for len, +1 for CRC
-    uint8_t                     crc = 0;
+//    not used
+//    uint8_t                     crc = 0;
     uint8_t                     wrBlock = (( wrLen & 0x80 ) != 0 );
     uint8_t                     rdBlock = (( rdLen & 0x80 ) != 0 );
     int                         rc = 0;

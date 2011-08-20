@@ -17,9 +17,6 @@ int main (void)
 	int i;
 	beam_t *beam;
 	uint32_t rgb = 0x00000080;
-	unsigned int blue_offset = 0;
-	unsigned int red_offset = 8;
-	unsigned int green_offset = 16;
 
 	setup();
 
