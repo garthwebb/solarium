@@ -137,6 +137,7 @@ void setup (void) {
 	assign_ray(&ring[12], 16);
 	assign_ray(&ring[12], 17);
 	assign_partial_ray(&ring[12], 18, 1, 13);
+	assign_partial_ray(&ring[12], 15, 6, 10);
 
 	/** Ring 11 - 46 beams **/
 	set_ring_size(&ring[11], 46, &beam_index);
@@ -225,6 +226,7 @@ void set_ring_size (ring_t *ring, uint8_t num_beams, int *beam_index) {
 		beam[*beam_index].dirty = NULL;
 		++(*beam_index);
 	}
+//	fprintf (stderr, "Setting beam numbers %d to %d to NULL (%d beams).\n", *beam_index - num_beams, *beam_index - 1, num_beams);
 }
 
 // Note, ray_num should start at 1 to match the hemisphere map.  It will be -1 in the function
@@ -265,6 +267,7 @@ void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t l
 		   up rays and rings, we can also figure out which devices map to
 		   the beam that is shared between the ray and ring.
 		*/
+//		fprintf(stderr, "Initializing beam %d\n", start+i);
 		ring->beams[start+i]->dirty = &(r->dirty);
 		ring->beams[start+i]->red = &(r->devices[0]->value[i+first-1]);
 		ring->beams[start+i]->green = &(r->devices[1]->value[i+first-1]);

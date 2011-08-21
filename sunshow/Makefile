@@ -39,7 +39,7 @@ CPPFLAGS += -I $(SOLARIUM_LIB)
 # and add them to LDFLAGS.
 #
 
-# LDFLAGS += -L somedir
+LDFLAGS += -static
 
 #
 # If you need additional libraries, then use -lxxx to search for libxxx.a
