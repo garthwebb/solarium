@@ -4,15 +4,17 @@
 #include "solarium-draw.h"
 #include "i2c/device.h"
 
+// TODO: Must initialize position of beams
+
 // Each ring is 5.625 degrees away from the next ring.  This maps degrees latitude to a ring number
 uint_t lat_to_ring[180] = {16,16,16,16,15,15,15,15,15,15,14,14,14,14,14,14,14,13,13,13,13,13,13,13,12,12,12,12,12,12,11,11,11,11,11,11,11,10,10,10,10,10,10,10,9,9,9,9,9,9,8,8,8,8,8,8,8,7,7,7,7,7,7,6,6,6,6,6,6,6,5,5,5,5,5,5,5,4,4,4,4,4,4,3,3,3,3,3,3,3,2,2,2,2,2,2,2,1,1,1,1,1,1,0,0,0,0,0,0,0,1,1,1,1,1,1,2,2,2,2,2,2,2,3,3,3,3,3,3,3,4,4,4,4,4,4,5,5,5,5,5,5,5,6,6,6,6,6,6,6,7,7,7,7,7,7,8,8,8,8,8,8,8,9,9,9,9,9,9,10,10,10,10,10,10,10,11,11,11,11,11,11,11,12,12,12,12,12,12,13,13,13,13,13,13,13,14,14,14,14,14,14,14,15,15,15,15,15,15,16,16,16,16};
-
 
 // This maps each degree of each ring to a particular beam on that ring. Beams are numbered by their
 // order on the ring, e.g. ring 16 has beams 1 though 60, ring 15 has beams 1 through 58, etc.
 uint8_t lon_to_beam[17][360] = {
 // Ring 0
-{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+},
 // Ring 1
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4},
 // Ring 2
@@ -236,7 +238,7 @@ void set_ring_size (ring_t *ring, uint8_t num_beams, int *beam_index) {
 // Note, ray_num should start at 1 to match the hemisphere map.  It will be -1 in the function
 // to map to the array properly.  Similarly first and last should start at 1
 void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t last) {
-	int i = 0;
+	unsigned int i = 0;
 	int start = -1;
 	int end;
 	ray_t *r;
@@ -260,8 +262,6 @@ void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t l
 	assert (end < ring->num_beams);
 
 	r = get_ray(ray_num);
-
-	assert (r != NULL);
 
 	// Start assigning beams
 	for (i = 0; i <= end; ++i) {
@@ -298,33 +298,32 @@ int valid_device_addr (uint8_t addr) {
 	return 1;
 }
 
-device_t *get_device(int index) {
-	// This could probably just be an assert
-	if (index >= NUM_DEVICES || index < 0) {
-		return (device_t *)NULL;
-	}
+device_t *get_device(uint8_t index) {
+
+	assert (index < NUM_DEVICES);
 
 	return &device[index];
 }
 
-ray_t *get_ray(int index) {
+ray_t *get_ray(uint8_t index) {
         // The index argument is 1 indexed, but the array is 0 indexed
         --index;
 
-	// This could probably just be an assert
-	if (index > NUM_RAYS || index < 0) {
-		return (ray_t *)NULL;
-	}
+	assert (index < NUM_RAYS);
 
 	return &(ray[index]);
 }
 
-beam_t *get_beam(int index) {
+beam_t *get_beam(uint16_t index) {
 
-	// This could probably just be an assert
-	if (index > NUM_BEAMS || index < 0) {
-		return (beam_t *)NULL;
-	}
+	assert (index < NUM_BEAMS);
 
 	return &(beam[index]);
+}
+
+ring_t *get_ring (uint8_t index)
+{
+	assert (index < NUM_RINGS);
+
+	return &(ring[index]);
 }

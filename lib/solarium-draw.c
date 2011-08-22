@@ -1,33 +1,76 @@
 #include "solarium-types.h"
+#include "solarium-draw.h"
 #include "i2c/device.h"
 
 inline void draw_device (device_t *dev);
 
-void draw (void) {
+void draw (void)
+{
 	int i;
 	ray_t *r;
 
 	for (i = FIRST_RAY_INDEX; i <= LAST_RAY_INDEX; ++i) {
 		r = get_ray(i);
 
-                if (r == NULL || !r->dirty) {
+		if (r == NULL || !r->dirty) {
 			continue;
 		}
 
-		draw_device (r->devices[0]);
-		draw_device (r->devices[1]);
-		draw_device (r->devices[2]);
+		if (i < 30) {
+			// HACK don't draw to currently disabled rays
+			draw_device (r->devices[0]);
+			draw_device (r->devices[1]);
+			draw_device (r->devices[2]);
+		}
 
                 r->dirty = 0;
 	}
 }
 
-inline void draw_device (device_t *dev) {
-        fprintf(stderr, "Writing to address %d\n", dev->addr);
+// Return distance where COLOR_MAP_SIZE > dist >= 0
+uint16_t calc_degree_distance (coordinates_t *p1, coordinates_t *p2)
+{
+	uint16_t dist = 0;
+	// TODO: do distance calculation
+	return dist;
+}
+
+// color_map must point to an array of COLOR_MAP_SIZE color_t structs
+void draw_circles (coordinates_t *center_pos, color_t color_map[])
+{
+	uint8_t r_index, rb_index;
+	uint16_t dist;
+	ring_t *r;
+	beam_t *b;
+	coordinates_t *pos;
+	for (r_index = 0; r_index < NUM_RINGS; ++r_index) {
+		r = get_ring (r_index);
+		for (rb_index = 0; rb_index < r->num_beams; ++rb_index) {
+			b = r->beams[rb_index];
+			pos = &(b->position);
+
+			dist = calc_degree_distance (pos, center_pos);
+
+			*(b->red) = color_map[dist].red;
+			*(b->green) = color_map[dist].green;
+			*(b->blue) = color_map[dist].blue;
+
+			// possibly optimize to only set dirty if changed?
+			*(b->dirty) = 1;
+		}
+	}
+
+	draw();
+}
+
+inline void draw_device (device_t *dev)
+{
+//	fprintf(stderr, "Writing to address %d\n", dev->addr);
 	fast_write_brightness (dev->addr, dev->value, 16);
 }
 
-void clear (void) {
+void clear (void)
+{
 	int i;
 
 	beam_t *b;
