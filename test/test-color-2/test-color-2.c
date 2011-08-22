@@ -85,11 +85,9 @@ int main( int argc, char **argv ) {
                 fast_write_brightness (grn_addr, green, 16);
                 fast_write_brightness (blu_addr, blue, 16);
 //		for (i=REG_PWM0; i<=REG_PWM15; i++) {
-	//		if ((i < REG_PWM11) || (i == REG_PWM12) || (i == REG_PWM13) || (i == REG_PWM14) || (i == REG_PWM15)) {
 //			write_register(red_addr, i, red[i-REG_PWM0]);
 //			write_register(grn_addr, i, green[i-REG_PWM0]);
 //			write_register(blu_addr, i, blue[i-REG_PWM0]);
-	//		}
 //		}
 	}
 

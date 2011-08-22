@@ -8,9 +8,15 @@ uint8_t max_val = 255;
 
 int main( int argc, char **argv ) {
 	int red_addr, grn_addr, blu_addr;
+	int micro_secs;
 	red_addr = atoi(argv[1]);
 	grn_addr = atoi(argv[2]);
 	blu_addr = atoi(argv[3]);
+	micro_secs = atoi(argv[4]);
+
+	if (micro_secs <= 0) {
+		micro_secs = 500000;
+	}
 
 	printf("Lighting red: % 3d, green: % 3d, blue: % 3d\n", red_addr, grn_addr, blu_addr);
 	
@@ -28,29 +34,30 @@ int main( int argc, char **argv ) {
 	while (1) {
 
 		for (i=REG_PWM0; i<=REG_PWM15; i++) {
-			printf(" - Red %d at 128\n", i);
+//			printf("Beam: %02d\n", i);
+//			printf(" - Red %d at 128\n", i);
 			write_register(red_addr, i, 128);
-			usleep(500000);
+			usleep(micro_secs);
 			
-			printf(" - Green %d at 128\n", i);
+//			printf(" - Green %d at 128\n", i);
 			write_register(grn_addr, i, 128);
-			usleep(500000);
+			usleep(micro_secs);
 
-			printf(" - Blue %d at 128\n", i);
+//			printf(" - Blue %d at 128\n", i);
 			write_register(blu_addr, i, 128);
-			usleep(500000);
+			usleep(micro_secs);
 			
-			printf(" - Red %d at 255\n", i);
+//			printf(" - Red %d at 255\n", i);
 			write_register(red_addr, i, 255);
-			usleep(500000);
+			usleep(micro_secs);
 
-			printf(" - Green %d at 255\n", i);
+//			printf(" - Green %d at 255\n", i);
 			write_register(grn_addr, i, 255);
-			usleep(500000);
+			usleep(micro_secs);
 
-			printf(" - Blue %d at 255\n", i);
+///			printf(" - Blue %d at 255\n", i);
 			write_register(blu_addr, i, 255);
-			usleep(500000);
+			usleep(micro_secs);
 			
 			write_register(red_addr, i, 0);
 			write_register(grn_addr, i, 0);

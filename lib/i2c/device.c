@@ -35,7 +35,7 @@ void init_devices (void) {
 
   /* Make sure all LED outs are set for PWM */
   uint8_t all_pwm = ledout_val(LEDOUT_PWM, LEDOUT_PWM, LEDOUT_PWM, LEDOUT_PWM);
-printf("SET PWM FOR %d\n", all_pwm);
+
   write_register(ADR_ALLCALL, REG_LEDOUT0, all_pwm);
   write_register(ADR_ALLCALL, REG_LEDOUT1, all_pwm);
   write_register(ADR_ALLCALL, REG_LEDOUT2, all_pwm);

@@ -23,14 +23,14 @@ $(error Unable to detect Cross Compiler)
 endif
 
 TARGET_ARCH=-Os -march=armv5te -mtune=xscale -Wa,-mcpu=xscale
-CC = $(CROSS_COMPILE)gcc
+CC = $(CROSS_COMPILE)gcc -static
 
 #
 # If you need additional serch paths for include files, then use the -I flag
 # and add them to the CPPFLAGS variable
 #
 
-CPPFLAGS += -I /home/garth/solarium
+CPPFLAGS += -I /home/garth/solarium/lib
 
 #
 # If you need addional search paths for library files, then use the -L flag
@@ -54,7 +54,7 @@ all:	depend $(TARGET)
 # add additional .o files to the end of the line
 #
 
-SRCS	= $(TARGET).c /home/garth/solarium/i2c/device.c /home/garth/solarium/i2c/i2c-api.c /home/garth/solarium/i2c/DumpMem.c /home/garth/solarium/i2c/Log.c
+SRCS	= $(TARGET).c /home/garth/solarium/lib/i2c/device.c /home/garth/solarium/lib/i2c/i2c-api.c /home/garth/solarium/lib/i2c/DumpMem.c /home/garth/solarium/lib/i2c/Log.c
 OBJS	= $(SRCS:.c=.o)
 		     
 $(TARGET) : $(OBJS)
