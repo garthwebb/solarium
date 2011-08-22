@@ -61,7 +61,8 @@ extern uint8_t BAD_ADDRESSES[];
 
 // This maps each degree of each ring to a particular beam on that ring. Beams are numbered by their
 // order on the ring, e.g. ring 16 has beams 1 though 60, ring 15 has beams 1 through 58, etc.
-extern uint8_t degree_map[17][360];
+extern uint8_t lon_to_beam[17][360];
+exterm uint8_t lat_to_ring[180];
 
 #define LAST_DEVICE_ADDRESS  (FIRST_DEVICE_ADDRESS + NUM_DEVICES + sizeof(BAD_ADDRESSES) - 1)
 
