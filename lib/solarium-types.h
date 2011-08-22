@@ -18,6 +18,12 @@ typedef struct {
 					        // A pointer to ray's dirty
 } device_t;
 
+// Coordinates in degrees
+typedef struct coordinates_struct {
+	uint16_t elevation;
+	uint16_t azimuth;
+} coordinates_t;
+
 // Represents a RGB beam
 typedef struct {
 	uint8_t *red;   // Color components of the beam.  Pointers to values in a device
@@ -26,6 +32,7 @@ typedef struct {
 
 	uint8_t *dirty; // Whether this beam has changed.
 					// A pointer to a ray's dirty
+	coordinates_t position;
 } beam_t;
 
 // Represents a ray of 16 beams
@@ -66,8 +73,9 @@ extern uint8_t degree_map[17][360];
 #define LAST_DEVICE_ADDRESS  (FIRST_DEVICE_ADDRESS + NUM_DEVICES + sizeof(BAD_ADDRESSES) - 1)
 
 void setup (void);
-device_t *get_device (int index);
-ray_t *get_ray (int index);
-beam_t *get_beam(int index);
+device_t *get_device (uint8_t index);
+ray_t *get_ray (uint8_t index);
+beam_t *get_beam (uint16_t index);
+ring_t *get_ring (uint8_t index);
 
 #endif
