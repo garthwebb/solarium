@@ -27,4 +27,8 @@ void draw_circles (coordinates_t *center_pos, color_t color_map[]);
 // Clear the screen buffer (make it black)
 void clear (void);
 
+// Some conversions
+int compass_to_lat (int deg);
+int compass_to_lon (int deg);
+
 #endif
