@@ -16,12 +16,6 @@ void do_sun_frame(double day_fraction);
 double compass_to_lat (double deg);
 double compass_to_lon (double deg);
 
-// See solarium-types.c
-extern device_t device[NUM_DEVICES];
-extern beam_t beam[NUM_BEAMS];
-extern ray_t  ray[NUM_RAYS+1];
-extern ring_t ring[NUM_RINGS];
-
 int main (void) {
 	printf("Setting up structures\n");
 	setup();
