@@ -1,6 +1,9 @@
+#include <math.h>
 #include "solarium-types.h"
 #include "solarium-draw.h"
 #include "i2c/device.h"
+
+#define PI 3.14159265
 
 inline void draw_device (device_t *dev);
 
@@ -31,7 +34,12 @@ void draw (void)
 uint16_t calc_degree_distance (coordinates_t *p1, coordinates_t *p2)
 {
 	uint16_t dist = 0;
-	// TODO: do distance calculation
+	double value = 0.0;
+	double p1Latitude = p1->elevation * PI / 180;
+	double p2Latitude = p2->elevation * PI / 180;
+	double deltaLongitude = (p1->azimuth - p2->azimuth) * PI / 180;
+	value = acos(sin(p1Latitude) * sin(p2Latitude) + cos(p1Latitude) * cos(p2Latitude) * cos(deltaLongitude));
+	dist = value * 180 / PI;
 	return dist;
 }
 

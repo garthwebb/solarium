@@ -45,7 +45,7 @@ LDFLAGS += -static -s
 # If you need additional libraries, then use -lxxx to search for libxxx.a
 #
 
-# LDLIBS += -lxxx
+LDLIBS += -lm
 
 .PHONY: all
 
