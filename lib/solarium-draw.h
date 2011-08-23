@@ -8,13 +8,7 @@
 #ifndef __SOLARIUM_DRAW_H__
 #define __SOLARIUM_DRAW_H__
 
-#define COLOR_MAP_SIZE 181
-
-typedef struct {
-	uint8_t red;
-	uint8_t green;
-	uint8_t blue;
-} color_t;
+#include <color_map.h>
 
 // Copy the back buffer to the screen
 void draw (void);
