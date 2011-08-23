@@ -1,7 +1,8 @@
 #include <stdio.h>
-#include "solarium-types.h"
 #include <time.h>
 #include <unistd.h>
+#include "solarium-types.h"
+#include "solarium-draw.h"
 
 // Find the number of clocks per millisecond
 #define CLOCKS_PER_MSEC CLOCKS_PER_SEC/1000
@@ -54,7 +55,7 @@ int main (void) {
 
 		// Process the current frame
 		do_sun_frame(day_fraction);
-		refresh();
+		draw();
 
 		// Wait for the remainder of the frame if we have extra time
 		frame_elapsed = ((double) (clock() - frame_start)) / CLOCKS_PER_MSEC;
