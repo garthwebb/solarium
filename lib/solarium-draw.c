@@ -73,7 +73,7 @@ void draw_circles (coordinates_t *center_pos, color_t color_map[])
 
 inline void draw_device (device_t *dev)
 {
-	fprintf(stderr, "Writing to address %d\n", dev->addr);
+//	fprintf(stderr, "Writing to address %d\n", dev->addr);
 	fast_write_brightness (dev->addr, dev->value, 16);
 }
 
