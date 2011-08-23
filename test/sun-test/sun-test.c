@@ -19,25 +19,35 @@ int main (void)
 		color_map[i].green = g;
 		color_map[i].blue = b;
 
+		printf ("Setting color_map %d to %d, %d, %d\n", i, r, g, b);
 		if (r > 0) {
-			--r;
-			--g;
-			--b;
+			r -= 3;
+			g -= 3;
+			b -= 3;
 		}
 	}
 
 	while (1) {
 		center.azimuth = 0;
-		for (ele = 0; ele < 90; ele++) {
+		for (ele = 270; ele < 360; ++ele) {
 			center.elevation = ele;
 
+			printf ("Calling draw_circles %d 0\n", ele);
+			draw_circles(&center, color_map);
+		}
+
+		for (ele = 0; ele < 90; ++ele) {
+			center.elevation = ele;
+
+			printf ("Calling draw_circles %d 0\n", ele);
 			draw_circles(&center, color_map);
 		}
 
 		center.azimuth = 180;
-		for (ele = 90; ele >= 0; ele--) {
+		for (ele = 90; ele < 270; ++ele) {
 			center.elevation = ele;
 
+			printf ("Calling draw_circles %d 90\n", ele);
 			draw_circles(&center, color_map);
 		}
 	}
