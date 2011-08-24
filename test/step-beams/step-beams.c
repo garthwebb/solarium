@@ -32,25 +32,25 @@ void set_beam_colors (int i)
 	}
 #else
 	if (!(i % 4)) {
-		printf ("Writing white\n");
+//		printf ("Writing white\n");
 		*(beam->red) = 255;
 		*(beam->green) = 255;
 		*(beam->blue) = 255;
 	}
 	else if ((i % 4) == 1) {
-		printf ("Writing red\n");
+//		printf ("Writing red\n");
 		*(beam->red) = 255;
 		*(beam->green) = 0;
 		*(beam->blue) = 0;
 	}
 	else if ((i % 4) == 2) {
-		printf ("Writing green\n");
+//		printf ("Writing green\n");
 		*(beam->red) = 0;
 		*(beam->green) = 255;
 		*(beam->blue) = 0;
 	}
 	else if ((i % 4) == 3) {
-		printf ("Writing blue\n");
+//		printf ("Writing blue\n");
 		*(beam->red) = 0;
 		*(beam->green) = 0;
 		*(beam->blue) = 255;

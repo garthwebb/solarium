@@ -43,12 +43,13 @@ void setup (void) {
 			// Save a pointer to this device's ray's dirty bit
 			device[(3*x) + y].dirty = &(ray[x].dirty);
 
-			// Skip over any reserved addresses
-			while (!valid_device_addr(device_addr)) {
-				device_addr++;
-			}
 			// Set the address for the device
-			device[(3*x) + y].addr = device_addr;
+			if (device_addr == 112) {
+				device[(3*x) + y].addr = 126;
+			}
+			else {
+				device[(3*x) + y].addr = device_addr;
+			}
 
 			// Initialize each of the 16 LEDs the device controls
 			for (z = 0; z < 16; ++z) {
