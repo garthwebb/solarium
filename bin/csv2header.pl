@@ -42,18 +42,12 @@ print qq(
 #ifndef __COLORMAP_H__
 #define __COLORMAP_H__
 
-typedef struct {
-        int red;
-        int green;
-        int blue;
-} color_t;
-
 #define NUM_MAPS $num_maps
 #define COLOR_MAP_SIZE $num_colors
 
 );
 
-print 'color_t color_map['.scalar(@maps)."][181] = {\n";
+print "#define COLOR_MAP_INIT {\\\n";
 
 my $out = '';
 foreach my $map (@maps) {
@@ -62,12 +56,11 @@ foreach my $map (@maps) {
 		$out .= '{'.join(',', @$rgb).'},';
 	}
 	chop($out);
-	$out .= "}\n";
+	$out .= "}\\\n";
 }
 print $out;
 
-print qq(
-};
+print qq(};
 
 #endif
 );

@@ -85,9 +85,13 @@ int main (int argc, char **argv) {
 
 // Do what's necessary for the next frame of the sunshow
 void do_sun_frame (double day_fraction) {
+	color_t *color_map;
+
 	coordinates_t center;
 	center.azimuth  = 0;
 	center.elevation = 2*PI*day_fraction;
+
+        color_map = get_color_map((int) NUM_MAPS*day_fraction);
 
 	printf ("Calling draw_circles %d 0\n", center.elevation);
 	draw_circles(&center, color_map);
