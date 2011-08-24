@@ -43,7 +43,7 @@ int main (void)
 			draw_circles(&center, color_map);
 		}
 
-		center.azimuth = 180;
+//		center.azimuth = 180;
 		for (ele = 90; ele < 270; ++ele) {
 			center.elevation = ele;
 
