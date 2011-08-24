@@ -95,13 +95,12 @@ int main (void)
 		center.az_cos = cos(center.azimuth);
 		for (ele = 0; ele < 360; ++ele) {
 			color_t *color_map = get_color_map(
-//				9
 				color_map_index[(ele + ELEVATION_OFFSET)/15]
                         );
 			center.elevation = radians[ele];
 			center.ele_sin = sin(radians[ele]);
 			center.ele_cos = cos(radians[ele]);
-//                        printf ("%d %d\n", (ele + ELEVATION_OFFSET)/15, ele);
+			printf ("%d %d\n", (ele + ELEVATION_OFFSET)/15, ele);
 //			printf ("Calling draw_circles %d with offset %d color_map %d\n",
 //				ele, (ele + ELEVATION_OFFSET)/15, color_map_index[(ele + ELEVATION_OFFSET)/15]);
 			draw_circles(&center, color_map);
