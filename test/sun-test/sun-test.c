@@ -47,7 +47,7 @@ int main (void)
 		for (ele = 90; ele < 270; ++ele) {
 			center.elevation = ele;
 
-			printf ("Calling draw_circles %d 90\n", ele);
+			printf ("Calling draw_circles %d 0\n", ele);
 			draw_circles(&center, color_map);
 		}
 	}
