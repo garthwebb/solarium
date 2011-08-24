@@ -19,12 +19,9 @@ void draw (void)
 			continue;
 		}
 
-		if (i < 30) {
-			// HACK don't draw to currently disabled rays
-			draw_device (r->devices[0]);
-			draw_device (r->devices[1]);
-			draw_device (r->devices[2]);
-		}
+		draw_device (r->devices[0]);
+		draw_device (r->devices[1]);
+		draw_device (r->devices[2]);
 
                 r->dirty = 0;
 	}
@@ -76,7 +73,7 @@ void draw_circles (coordinates_t *center_pos, color_t color_map[])
 
 inline void draw_device (device_t *dev)
 {
-//	fprintf(stderr, "Writing to address %d\n", dev->addr);
+	fprintf(stderr, "Writing to address %d\n", dev->addr);
 	fast_write_brightness (dev->addr, dev->value, 16);
 }
 
