@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include "solarium-types.h"
 #include "solarium-draw.h"
 
@@ -8,10 +9,10 @@
 #define CLOCKS_PER_MSEC CLOCKS_PER_SEC/1000
 
 // Animation interval. 42 ms would give 24 frames a second, movie speed
-#define FRAME_MSEC 84
+#define DEF_FRAME_MSEC 84
 
 // Length of day in milliseconds
-#define DAY_LENGTH 9*60*1000
+#define DEF_DAY_LENGTH 9*60*1000
 
 // Define where we start the day, where
 // - 0 is midnight
@@ -22,7 +23,25 @@
 
 void do_sun_frame(double day_fraction);
 
-int main (void) {
+int main (int argc, char **argv) {
+	int day_length, frame_msec;
+
+	// One argument; its day_length
+	if (argc == 1) {
+		day_length = atoi(argv[1]);
+		frame_msec = DEF_FRAME_MSEC;
+	}
+	// Two arguments; day_length, frame_msec
+	else if (argc == 2) {
+		day_length = atoi(argv[1]);
+		frame_msec = atoi(argv[2]);
+	}
+	// No arguments, use all defaults
+	else {
+		day_length = DEF_DAY_LENGTH;
+		frame_msec = DEF_FRAME_MSEC;
+	}
+
 	printf("Setting up structures\n");
 	setup();
 
@@ -35,11 +54,11 @@ int main (void) {
 	double frame_elapsed = 0;
 	
 	// Get the time in secs for when the day started
-	day_start = clock() - (START_FRACTION * (double) DAY_LENGTH);
+	day_start = clock() - (START_FRACTION * (double) day_length);
 
 	while (1) {
 		// How much of the day has passed
-		day_fraction = (clock() - day_start)/DAY_LENGTH;
+		day_fraction = (clock() - day_start)/day_length;
 
 		// Restart day if we've reached the end of the day
 		if (day_fraction >= 1) {
@@ -56,8 +75,8 @@ int main (void) {
 
 		// Wait for the remainder of the frame if we have extra time
 		frame_elapsed = ((double) (clock() - frame_start)) / CLOCKS_PER_MSEC;
-		if (frame_elapsed < FRAME_MSEC) {
-			usleep(FRAME_MSEC - frame_elapsed);
+		if (frame_elapsed < frame_msec) {
+			usleep(frame_msec - frame_elapsed);
 		}
 	}
 
@@ -66,16 +85,11 @@ int main (void) {
 
 // Do what's necessary for the next frame of the sunshow
 void do_sun_frame (double day_fraction) {
-	double lat, lon;
+	coordinates_t center;
+	center.azimuth  = 0;
+	center.elevation = 2*PI*day_fraction;
 
-	// Get figure out lon/lat coords
-	lat = compass_to_lat(day_fraction * 360.0);
-	if (day_fraction <= 0.5) {
-		lon = 90;
-	} else {
-		lon = -90;
-	}
-
-	//position_sun(lat, lon, day_fraction);
+	printf ("Calling draw_circles %d 0\n", center.elevation);
+	draw_circles(&center, color_map);
 }
 
