@@ -2,8 +2,9 @@
 #include "solarium-types.h"
 #include "solarium-draw.h"
 #include "i2c/device.h"
+#include "color_map.h"
 
-#define PI 3.14159265
+color_t color_map[NUM_MAPS][COLOR_MAP_SIZE] = COLOR_MAP_INIT;
 
 inline void draw_device (device_t *dev);
 
@@ -36,32 +37,34 @@ uint16_t calc_degree_distance (coordinates_t *p1, coordinates_t *p2)
 	double p2Latitude = p2->elevation * PI / 180;
 	double deltaLongitude = (p1->azimuth - p2->azimuth) * PI / 180;
 	value = acos(sin(p1Latitude) * sin(p2Latitude) + cos(p1Latitude) * cos(p2Latitude) * cos(deltaLongitude));
-	dist = value * 180 / PI;
+	dist = value * 180 / PI + 0.5;
 	return dist;
 }
 
 // color_map must point to an array of COLOR_MAP_SIZE color_t structs
-void draw_circles (coordinates_t *center_pos, color_t color_map[])
+void draw_circles (coordinates_t *center_pos, color_t *my_color_map)
 {
 	uint8_t r_index, rb_index;
 	uint16_t dist;
 	ring_t *r;
 	beam_t *b;
 	coordinates_t *pos;
+//	fprintf (stderr, "Inside draw_circles\n");
 	for (r_index = 0; r_index < NUM_RINGS; ++r_index) {
 		r = get_ring (r_index);
+//		fprintf (stderr, "Num beams %d for ring %d\n", r->num_beams, r_index);
 		for (rb_index = 0; rb_index < r->num_beams; ++rb_index) {
 			b = r->beams[rb_index];
 			pos = &(b->position);
 
-			fprintf (stderr, "Ring %d Beam %d, elevation %d, azimuth %d\n",
-				r_index, rb_index, pos->elevation, pos->azimuth);
-
 			dist = calc_degree_distance (pos, center_pos);
 
-			*(b->red) = color_map[dist].red;
-			*(b->green) = color_map[dist].green;
-			*(b->blue) = color_map[dist].blue;
+//			fprintf (stderr, "Ring %d Beam %d, elevation %d, azimuth %d colors %d, %d, %d\n",
+//				r_index, rb_index, pos->elevation, pos->azimuth, my_color_map[dist].red, my_color_map[dist].green, my_color_map[dist].blue);
+
+			*(b->red) = my_color_map[dist].red;
+			*(b->green) = my_color_map[dist].green;
+			*(b->blue) = my_color_map[dist].blue;
 
 			// possibly optimize to only set dirty if changed?
 			*(b->dirty) = 1;
@@ -94,31 +97,8 @@ void clear (void)
 	draw();
 }
 
-// Adjust for how lat is actually measured.  Start at due south, -90
-//   0   90   180  270    360
-// -90 -> 0 -> 90 -> 0 -> -90
-int compass_to_lat (int deg) {
-        if ((deg > 360) || (deg < 0))
-                deg = deg % 360;
-
-        if (deg < 180) {
-                return (deg - 90);
-        } else {
-                return (270 - deg);
-        }
-}
-
-// Adjust for how lon is actually measured
-//   0      180    360
-//   0  ->  180  ->  0
-int compass_to_lon (int deg) {
-        if ((deg > 360) || (deg < 0))
-                deg = deg % 360;
-
-        if (deg <= 180) {
-                return deg;
-        } else {
-                return 360-deg;
-        }
+color_t *get_color_map (int i)
+{
+    return &(color_map[i][0]);
 }
 

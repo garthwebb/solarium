@@ -2,17 +2,18 @@
 #include <unistd.h>
 #include "solarium-types.h"
 #include "solarium-draw.h"
+#include "color_map.h"
 
 int main (void)
 {
-	int i, ele;
+	int ele;
 	coordinates_t center;
+	int i;
+/*
 	uint8_t r = 255;
 	uint8_t g = 255;
 	uint8_t b = 255;
 	color_t color_map [COLOR_MAP_SIZE];
-
-	setup();
 
 	for (i = 0; i < COLOR_MAP_SIZE; ++i) {
 		color_map[i].red = r;
@@ -26,25 +27,26 @@ int main (void)
 			b -= 3;
 		}
 	}
+*/
+	color_t *color_map = get_color_map(0);
+
+	for (i = 0; i < COLOR_MAP_SIZE; i++) {
+		color_map[i].red -= 50;
+		color_map[i].green -= 50;
+		color_map[i].blue -= 50;
+	}
+
+	double radians[360];
+
+	for (i = 0; i < 360; ++i) {
+		radians[i] = i * PI / 180;
+	}
+
+	setup();
 
 	while (1) {
 		center.azimuth = 0;
-		for (ele = 270; ele < 360; ++ele) {
-			center.elevation = ele;
-
-			printf ("Calling draw_circles %d 0\n", ele);
-			draw_circles(&center, color_map);
-		}
-
-		for (ele = 0; ele < 90; ++ele) {
-			center.elevation = ele;
-
-			printf ("Calling draw_circles %d 0\n", ele);
-			draw_circles(&center, color_map);
-		}
-
-//		center.azimuth = 180;
-		for (ele = 90; ele < 270; ++ele) {
+		for (ele = 0; ele < 360; ++ele) {
 			center.elevation = ele;
 
 			printf ("Calling draw_circles %d 0\n", ele);
