@@ -4,6 +4,7 @@
 #include "i2c/device.h"
 #include "color_map.h"
 
+color_t color_map[NUM_MAPS][COLOR_MAP_SIZE] = COLOR_MAP_INIT;
 color_t sun_color_map[NUM_MAPS][COLOR_MAP_SIZE] = COLOR_MAP_INIT;
 
 inline void draw_device (device_t *dev);
@@ -94,6 +95,11 @@ void clear (void)
 	}
 
 	draw();
+}
+
+color_t *get_color_map (int i)
+{
+    return &(color_map[i][0]);
 }
 
 color_t *get_sun_color_map (int i)

@@ -29,12 +29,12 @@ int main (void)
 		}
 	}
 */
-	color_t *color_map = get_sun_color_map(0);
+	color_t *color_map = get_color_map(0);
 
 	for (i = 0; i < COLOR_MAP_SIZE; i++) {
-		color_map[i].red -= 50;
-		color_map[i].green -= 50;
-		color_map[i].blue -= 50;
+		color_map[i].red = 0;
+		color_map[i].green = 10;
+		color_map[i].blue = 0;
 	}
 
 	double radians[360];
