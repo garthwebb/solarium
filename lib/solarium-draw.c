@@ -93,3 +93,32 @@ void clear (void)
 
 	draw();
 }
+
+// Adjust for how lat is actually measured.  Start at due south, -90
+//   0   90   180  270    360
+// -90 -> 0 -> 90 -> 0 -> -90
+int compass_to_lat (int deg) {
+        if ((deg > 360) || (deg < 0))
+                deg = deg % 360;
+
+        if (deg < 180) {
+                return (deg - 90);
+        } else {
+                return (270 - deg);
+        }
+}
+
+// Adjust for how lon is actually measured
+//   0      180    360
+//   0  ->  180  ->  0
+int compass_to_lon (int deg) {
+        if ((deg > 360) || (deg < 0))
+                deg = deg % 360;
+
+        if (deg <= 180) {
+                return deg;
+        } else {
+                return 360-deg;
+        }
+}
+
