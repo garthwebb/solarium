@@ -4,7 +4,7 @@
 #include "i2c/device.h"
 #include "color_map.h"
 
-color_t color_map[NUM_MAPS][COLOR_MAP_SIZE] = COLOR_MAP_INIT;
+color_t sun_color_map[NUM_MAPS][COLOR_MAP_SIZE] = COLOR_MAP_INIT;
 
 inline void draw_device (device_t *dev);
 
@@ -16,7 +16,7 @@ void draw (void)
 	for (i = FIRST_RAY_INDEX; i <= LAST_RAY_INDEX; ++i) {
 		r = get_ray(i);
 
-		if (r == NULL || !r->dirty) {
+		if (!r->dirty) {
 			continue;
 		}
 
@@ -31,13 +31,12 @@ void draw (void)
 // Return distance where COLOR_MAP_SIZE > dist >= 0
 uint16_t calc_degree_distance (coordinates_t *p1, coordinates_t *p2)
 {
+	static double one80_pi = 180 / PI;
 	uint16_t dist = 0;
 	double value = 0.0;
-	double p1Latitude = p1->elevation * PI / 180;
-	double p2Latitude = p2->elevation * PI / 180;
-	double deltaLongitude = (p1->azimuth - p2->azimuth) * PI / 180;
-	value = acos(sin(p1Latitude) * sin(p2Latitude) + cos(p1Latitude) * cos(p2Latitude) * cos(deltaLongitude));
-	dist = value * 180 / PI + 0.5;
+	double deltaLongitude = p1->azimuth - p2->azimuth;
+	value = acos(p1->ele_sin * p2->ele_sin + p1->ele_cos * p2->ele_cos * cos(deltaLongitude));
+	dist = value * one80_pi + 0.5;
 	return dist;
 }
 
@@ -97,8 +96,8 @@ void clear (void)
 	draw();
 }
 
-color_t *get_color_map (int i)
+color_t *get_sun_color_map (int i)
 {
-    return &(color_map[i][0]);
+    return &(sun_color_map[i][0]);
 }
 

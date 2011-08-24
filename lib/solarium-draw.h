@@ -29,6 +29,6 @@ void draw_circles (coordinates_t *center_pos, color_t *color_map);
 // Clear the screen buffer (make it black)
 void clear (void);
 
-color_t *get_color_map (int i);
+color_t *get_sun_color_map (int i);
 
 #endif

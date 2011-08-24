@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <unistd.h>
+#include <math.h>
 #include "solarium-types.h"
 #include "solarium-draw.h"
 #include "color_map.h"
@@ -28,7 +29,7 @@ int main (void)
 		}
 	}
 */
-	color_t *color_map = get_color_map(0);
+	color_t *color_map = get_sun_color_map(0);
 
 	for (i = 0; i < COLOR_MAP_SIZE; i++) {
 		color_map[i].red -= 50;
@@ -45,9 +46,13 @@ int main (void)
 	setup();
 
 	while (1) {
-		center.azimuth = 0;
+		center.azimuth = 0.0;
+		center.az_sin = sin(center.azimuth);
+		center.az_cos = cos(center.azimuth);
 		for (ele = 0; ele < 360; ++ele) {
-			center.elevation = ele;
+			center.elevation = radians[ele];
+			center.ele_sin = sin(radians[ele]);
+			center.ele_cos = cos(radians[ele]);
 
 			printf ("Calling draw_circles %d 0\n", ele);
 			draw_circles(&center, color_map);

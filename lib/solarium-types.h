@@ -20,8 +20,12 @@ typedef struct {
 
 // Coordinates in degrees
 typedef struct coordinates_struct {
-	uint16_t elevation;
-	uint16_t azimuth;
+	double elevation;
+	double ele_sin;
+	double ele_cos;
+	double azimuth;
+	double az_sin;
+	double az_cos;
 } coordinates_t;
 
 // Represents a RGB beam

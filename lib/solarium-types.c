@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <malloc.h>
+#include <math.h>
 #include "solarium-types.h"
 #include "solarium-draw.h"
 #include "i2c/device.h"
@@ -189,7 +190,9 @@ void set_ring_size (ring_t *ring, uint8_t num_beams, int *beam_index, int lat) {
 		beam[*beam_index].green = NULL;
 		beam[*beam_index].blue = NULL;
 		beam[*beam_index].dirty = NULL;
-		beam[*beam_index].position.elevation = lat;
+		beam[*beam_index].position.elevation = lat * PI / 180;
+		beam[*beam_index].position.ele_sin = sin(beam[*beam_index].position.elevation);
+		beam[*beam_index].position.ele_cos = cos(beam[*beam_index].position.elevation);
 		++(*beam_index);
 	}
 //	fprintf (stderr, "Setting beam numbers %d to %d to NULL (%d beams).\n", *beam_index - num_beams, *beam_index - 1, num_beams);
@@ -241,7 +244,9 @@ void assign_partial_ray (ring_t *ring, uint8_t ray_num, uint8_t first, uint8_t l
 		// ring is pointing to.
 		r->beams[i+first-1] = ring->beams[start+i];
 
-		ring->beams[start+i]->position.azimuth = 360 * (start+i) / ring->num_beams;
+		ring->beams[start+i]->position.azimuth = 2 * PI * (start+i) / ring->num_beams;
+		ring->beams[start+i]->position.az_sin = sin(ring->beams[start+i]->position.azimuth);
+		ring->beams[start+i]->position.az_cos = cos(ring->beams[start+i]->position.azimuth);
 	}
 }
 

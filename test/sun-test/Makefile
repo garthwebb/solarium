@@ -7,7 +7,7 @@
 ifeq ($(DEBUG),y)
 	CFLAGS += -O -g	-Wall	# -O is need to expand inlines
 else
-	CFLAGS += -O2 -Wall
+	CFLAGS += -O3 -Wall
 endif
 
 TARGET	= sun-test
@@ -24,7 +24,7 @@ ifeq ($(strip $(CROSS_COMPILE)),)
 $(error Unable to detect Cross Compiler)
 endif
 
-TARGET_ARCH=-Os -march=armv5te -mtune=xscale -Wa,-mcpu=xscale
+TARGET_ARCH= -march=armv5te -mtune=xscale -Wa,-mcpu=xscale
 CC = $(CROSS_COMPILE)gcc
 
 #
