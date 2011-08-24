@@ -24,17 +24,18 @@
 void do_sun_frame(double day_fraction);
 
 int main (int argc, char **argv) {
-	int day_length, frame_msec;
+	uint32_t day_length;
+	uint8_t frame_msec;
 
 	// One argument; its day_length
 	if (argc == 1) {
-		day_length = atoi(argv[1]);
+		day_length = (uint16_t) atoi(argv[1])*60*1000;
 		frame_msec = DEF_FRAME_MSEC;
 	}
 	// Two arguments; day_length, frame_msec
 	else if (argc == 2) {
-		day_length = atoi(argv[1]);
-		frame_msec = atoi(argv[2]);
+		day_length = (uint16_t) atoi(argv[1])*60*1000;
+		frame_msec = (uint8_t) atoi(argv[2]);
 	}
 	// No arguments, use all defaults
 	else {
@@ -93,7 +94,7 @@ void do_sun_frame (double day_fraction) {
 
         color_map = get_color_map((int) NUM_MAPS*day_fraction);
 
-	printf ("Calling draw_circles %d 0\n", center.elevation);
+	printf ("Calling draw_circles %4.2f\n", center.elevation);
 	draw_circles(&center, color_map);
 }
 
