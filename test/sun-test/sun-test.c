@@ -5,6 +5,8 @@
 #include "solarium-draw.h"
 #include "color_map.h"
 
+#define ELEVATION_OFFSET 0
+
 int main (void)
 {
 	int ele;
@@ -29,7 +31,6 @@ int main (void)
 		}
 	}
 */
-	color_t *color_map = get_color_map(0);
 
 /*
 	for (i = 0; i < COLOR_MAP_SIZE; i++) {
@@ -47,16 +48,62 @@ int main (void)
 
 	setup();
 
+	int color_map_index[24] = {
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+/*
+            12,
+            13,
+            14,
+            15,
+            16,
+            17,
+            18,
+            19,
+            20,
+            21,
+            22,
+            23,
+*/
+        };
+
 	while (1) {
 		center.azimuth = 0.0;
 		center.az_sin = sin(center.azimuth);
 		center.az_cos = cos(center.azimuth);
 		for (ele = 0; ele < 360; ++ele) {
+			color_t *color_map = get_color_map(
+				0
+//				color_map_index[(ele + ELEVATION_OFFSET)/15]
+                        );
 			center.elevation = radians[ele];
 			center.ele_sin = sin(radians[ele]);
 			center.ele_cos = cos(radians[ele]);
 
-			printf ("Calling draw_circles %d 0\n", ele);
+			printf ("Calling draw_circles %d with offset %d color_map %d\n",
+                            ele, (ele + ELEVATION_OFFSET)/15, color_map_index[(ele + ELEVATION_OFFSET)/15]);
 			draw_circles(&center, color_map);
 		}
 	}
