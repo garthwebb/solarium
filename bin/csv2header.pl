@@ -25,6 +25,7 @@ my @maps;
 open(FH, $file) or die "Can't open '$file': $!\n";
 while (my $line = <FH>) {
 	chomp($line);
+	next if $line =~ /^\s*$/;
 
 	my @m;
 	foreach my $rgb (split('\s*,\s*', $line)) {
@@ -49,18 +50,17 @@ print qq(
 
 print "#define COLOR_MAP_INIT {\\\n";
 
-my $out = '';
+my @gen_maps;
 foreach my $map (@maps) {
-	$out .= '{';
+	my @color;
 	foreach my $rgb (@$map) {
-		$out .= '{'.join(',', @$rgb).'},';
+		push @color, '{'.join(',', @$rgb).'}';
 	}
-	chop($out);
-	$out .= "}\\\n";
+	push @gen_maps, '{'.join(",", @color).'}';
 }
-print $out;
+print join(",\\\n", @gen_maps).'}';
 
-print qq(};
+print qq(
 
 #endif
 );
