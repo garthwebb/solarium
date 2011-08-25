@@ -59,8 +59,10 @@ void draw_circles (coordinates_t *center_pos, color_t *my_color_map)
 
 			dist = calc_degree_distance (pos, center_pos);
 
-//			fprintf (stderr, "Ring %d Beam %d, elevation %d, azimuth %d colors %d, %d, %d\n",
-//				r_index, rb_index, pos->elevation, pos->azimuth, my_color_map[dist].red, my_color_map[dist].green, my_color_map[dist].blue);
+                        if (r_index == 0) {
+			fprintf (stderr, "Ring %d Beam %d, elevation %d, azimuth %d colors %d, %d, %d\n",
+				r_index, rb_index, (int)(pos->elevation * 180 / PI), (int)(pos->azimuth * 180 / PI), my_color_map[dist].red, my_color_map[dist].green, my_color_map[dist].blue);
+			}
 
 			*(b->red) = my_color_map[dist].red;
 			*(b->green) = my_color_map[dist].green;

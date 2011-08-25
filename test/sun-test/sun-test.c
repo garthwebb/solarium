@@ -49,30 +49,30 @@ int main (void)
 	setup();
 
 	int color_map_index[24] = {
+            3, // 6 am
+            4, // 7
+            5, // 8
+            6, // 9
+            7, // 10
+            8, // 11
+            9, // 12 noon
+            10, // 1 pm
+            11, // 2 pm
+            12, // 3 pm
+            13, // 4 pm
+            14, // 5 pm
+            15, // 6 pm
             0,
-            1,
-            2,
-            3,
-            4,
-            5,
-            6,
-            7,
-            8,
-            9,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10,
-            10
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0, // 3am
+            1, // 4am
+            2 // 5am
 /*
             12,
             13,
@@ -95,8 +95,8 @@ int main (void)
 		center.az_cos = cos(center.azimuth);
 		for (ele = 0; ele < 360; ++ele) {
 			color_t *color_map = get_color_map(
-				0
-//				color_map_index[(ele + ELEVATION_OFFSET)/15]
+//				9
+				color_map_index[(ele + ELEVATION_OFFSET)/15]
                         );
 			center.elevation = radians[ele];
 			center.ele_sin = sin(radians[ele]);

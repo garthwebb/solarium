@@ -2,7 +2,7 @@
 #ifndef __COLORMAP_H__
 #define __COLORMAP_H__
 
-#define NUM_MAPS 17
+#define NUM_MAPS 16
 #define COLOR_MAP_SIZE 181
 
 #define COLOR_MAP_INIT {\
