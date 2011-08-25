@@ -52,6 +52,10 @@ void write_register (uint8_t addr, uint8_t reg, uint8_t val) {
   I2cSetSlaveAddress(i2cDev, addr, I2C_NO_CRC);
 
   rc = I2cTransfer( i2cDev, reg, &val, 1, NULL, 0, NULL );
+
+  if (rc != 0) {
+    exit (1);
+  }
   //printf("\n");
 }
 
