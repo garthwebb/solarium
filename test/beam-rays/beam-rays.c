@@ -61,7 +61,7 @@ int main (void)
 
 			draw();
 
-			printf ("Drew beam %d\n", i);
+//			printf ("Drew beam %d\n", i);
 
 #if ENABLE_BEAM_STEP_DELAY
 			usleep(BEAM_STEP_DELAY);
