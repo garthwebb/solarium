@@ -1,6 +1,6 @@
 #!/bin/sh
 
-/home/root/bin/sunshow
+/home/root/bin/sunshow > /dev/null 2>&1
 
 RET_CODE=$?
 
