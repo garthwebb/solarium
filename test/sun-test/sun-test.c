@@ -49,30 +49,30 @@ int main (void)
 	setup();
 
 	int color_map_index[24] = {
-            6, // 6 am
-            7, // 7
-            8, // 8
-            9, // 9
-            10, // 10
-            11, // 11
-            12, // 12 noon
-            13, // 1 pm
-            14, // 2 pm
-            15, // 3 pm
-            16, // 4 pm
-            17, // 5 pm
-            18, // 6 pm
-            0,
-            0,
-            0,
-            0,
-            0,
-            0, // 12 midnight
-            1, // 1am
-            2, // 2am
-            3, // 3am
-            4, // 4am
-            5 // 5am
+            0, // 6 am
+            1, // 7
+            2, // 8
+            3, // 9
+            4, // 10
+            5, // 11
+            6, // 12 noon
+            7, // 1 pm
+            8, // 2 pm
+            9, // 3 pm
+            10, // 4 pm
+            11, // 5 pm
+            12, // 6 pm
+            13,
+            14,
+            15,
+            16,
+            17,
+            18, // 12 midnight
+            19, // 1am
+            20, // 2am
+            21, // 3am
+            22, // 4am
+            23 // 5am
 /*
             12,
             13,
@@ -101,11 +101,11 @@ int main (void)
 			center.elevation = radians[ele];
 			center.ele_sin = sin(radians[ele]);
 			center.ele_cos = cos(radians[ele]);
-
-			printf ("Calling draw_circles %d with offset %d color_map %d\n",
-                            ele, (ele + ELEVATION_OFFSET)/15, color_map_index[(ele + ELEVATION_OFFSET)/15]);
+//                        printf ("%d %d\n", (ele + ELEVATION_OFFSET)/15, ele);
+//			printf ("Calling draw_circles %d with offset %d color_map %d\n",
+//				ele, (ele + ELEVATION_OFFSET)/15, color_map_index[(ele + ELEVATION_OFFSET)/15]);
 			draw_circles(&center, color_map);
-			sleep(1);
+//			usleep(500000);
 		}
 	}
 
