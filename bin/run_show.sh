@@ -5,5 +5,6 @@
 RET_CODE=$?
 
 if [ "$RET_CODE" != "0" ]; then
-       /sbin/reboot
+	sleep 60
+	/sbin/reboot
 fi
