@@ -90,7 +90,11 @@ void do_sun_frame (double day_fraction) {
 
 	coordinates_t center;
 	center.azimuth  = 0;
+	center.az_cos = cos(center.azimuth);
+	center.az_sin = sin(center.azimuth);
 	center.elevation = 2*PI*day_fraction;
+	center.ele_cos = cos(center.elevation);
+	center.ele_sin = sin(center.elevation);
 
         color_map = get_color_map((int) NUM_MAPS*day_fraction);
 
