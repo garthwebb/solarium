@@ -2,6 +2,7 @@
 #include <time.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <math.h>
 #include "solarium-types.h"
 #include "solarium-draw.h"
 
