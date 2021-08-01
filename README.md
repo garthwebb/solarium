@@ -1,5 +1,4 @@
 # Solarium Project 2011
-http://www.solarium2011.com
 
 ## About the Art
 
