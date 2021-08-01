@@ -24,13 +24,13 @@ Getting version 1161 is important because that is the version of the image on th
 
   http://docwiki.gumstix.org/index.php/Buildroot
 
+## NOTES
 
-****** NOTES
-applied extra/gumstix-buildroot.dff patch prior to make defconfig
-Must install texinfo
-make MAKEINFO=/usr/bin/makeinfo
-Add third parameter to open at toolchain_build_arm_nofpu/gcc-3.4.5/gcc/collect2.c:1537
-Download zlib by hand and stick it in the dl directory (sourceforge is silly).
-Add <linux/limits.h> to build_arm_nofpu/linux-2.6.18gum/scripts/mod/sumversion.c
-add -dirty suffix to KERNEL_VERSION in build_arm_nofpu/diethotplug-0.4/Makefile
-Download sysfsutils by hand and stick it in the dl directory.
+* applied extra/gumstix-buildroot.dff patch prior to make defconfig
+* Must install texinfo
+* make MAKEINFO=/usr/bin/makeinfo
+* Add third parameter to open at toolchain_build_arm_nofpu/gcc-3.4.5/gcc/collect2.c:1537
+* Download zlib by hand and stick it in the dl directory (sourceforge is silly).
+* Add <linux/limits.h> to build_arm_nofpu/linux-2.6.18gum/scripts/mod/sumversion.c
+* add -dirty suffix to KERNEL_VERSION in build_arm_nofpu/diethotplug-0.4/Makefile
+* Download sysfsutils by hand and stick it in the dl directory.
